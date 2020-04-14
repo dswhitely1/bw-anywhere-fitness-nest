@@ -1,4 +1,4 @@
-name: build
+name: Test Coverage Push to Code Climate
 
 on: [push, pull_request]
 

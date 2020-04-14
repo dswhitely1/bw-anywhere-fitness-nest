@@ -66,6 +66,14 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.{ts,js}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/src/test/**",
+      "!**/*.spec.{ts,js}",
+      "!**/coverage/**"
+    ]
   }
 }

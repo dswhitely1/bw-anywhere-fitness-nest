@@ -1,14 +1,14 @@
-import {TypeOrmModuleOptions} from '@nestjs/typeorm';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import {join} from 'path';
 require('dotenv').config();
 
 class ConfigService {
-  constructor(private env: {[key: string]: string | undefined}) {
-  }
+  constructor(private env: { [key: string]: string | undefined }) {}
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
     if (!value && throwOnMissing) {
-      throw new Error(`Missing Environment Variable`)
+      throw new Error(`Missing Environment Variable: env.${key}`);
     }
     return value;
   }
@@ -27,7 +27,7 @@ class ConfigService {
   }
 
   public isProduction(): boolean {
-    return this.getValue('NODE_ENV') === 'production'
+    return this.getValue('NODE_ENV') === 'production';
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
@@ -39,15 +39,15 @@ class ConfigService {
       password: this.getValue('DB_PASS'),
       database: this.getValue('DB_NAME'),
 
-      entities: ['**/*.entity{.ts,.js}'],
+      entities: [join(__dirname, '**/*.entity{.ts,.js}')],
       migrationsTableName: 'migrations',
 
       migrations: ['src/migrations/*.ts'],
       cli: {
-        migrationsDir: 'src/migrations'
+        migrationsDir: 'src/migrations',
       },
-      ssl: this.isProduction()
-    }
+      ssl: this.isProduction(),
+    };
   }
 }
 
@@ -58,5 +58,5 @@ export const configService = new ConfigService(process.env).ensureValues([
   'DB_PORT',
   'DB_USER',
   'DB_PASS',
-  'DB_NAME'
+  'DB_NAME',
 ]);

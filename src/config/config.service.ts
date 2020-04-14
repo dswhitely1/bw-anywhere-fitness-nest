@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import {join} from 'path';
+import { join } from 'path';
 require('dotenv').config();
 
 class ConfigService {
@@ -39,7 +39,7 @@ class ConfigService {
       password: this.getValue('DB_PASS'),
       database: this.getValue('DB_NAME'),
 
-      entities: [join(__dirname, '**/*.entity{.ts,.js}')],
+      entities: ['src/models/*.ts'],
       migrationsTableName: 'migrations',
 
       migrations: ['src/migrations/*.ts'],
